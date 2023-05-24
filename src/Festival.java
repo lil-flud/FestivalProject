@@ -16,7 +16,6 @@ public class Festival {
         this.setLocation();
         this.setNumOfStages();
         this.setAudienceSize();
-
     }
 
     public void setName() {
@@ -40,6 +39,8 @@ public class Festival {
                     case "n":
                         confirmed = true;
                         break;
+                    default:
+                        out.println("Invalid option!");
                 }
             }
         }
@@ -71,6 +72,9 @@ public class Festival {
                     case "n":
                         confirmed = true;
                         break;
+                    default:
+                        out.println("Invalid option!");
+
                 }
             }
         }

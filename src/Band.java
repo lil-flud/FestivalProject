@@ -19,10 +19,10 @@ public class Band {
             out.print("Band name: ");
             String potentialName = scanner.next();
             potentialName += scanner.nextLine();
-            out.println("Is " + potentialName + " correct? [Y]es, [N]o: ");
             String confirmation = "";
             boolean confirmed = false;
             while (!confirmed) {
+                out.println("Is " + potentialName + " correct? [Y]es, [N]o: ");
                 confirmation = scanner.next().toLowerCase();
                 switch (confirmation) {
                     case "y":
