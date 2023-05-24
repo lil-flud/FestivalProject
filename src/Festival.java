@@ -145,4 +145,12 @@ public class Festival {
         }
         return valid;
     }
+
+    public void pickBandsForLineUp(ArrayList<Band> allBands) {
+
+    }
+
+    public void setLineup(ArrayList<Band> lineup) {
+        this.lineup = lineup;
+    }
 }

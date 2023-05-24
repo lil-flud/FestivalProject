@@ -71,7 +71,6 @@ public class Main {
                                 break;
 
                             case "m":
-//                                currentState = "Main-Menu";
                                 viewing = false;
                                 break;
 
