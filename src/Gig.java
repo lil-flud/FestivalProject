@@ -2,10 +2,6 @@ import java.util.ArrayList;
 
 public class Gig {
     Band band;
-    ArrayList<String> setlist;
+//    ArrayList<String> setlist;
 
-
-    public Gig() {
-
-    }
 }

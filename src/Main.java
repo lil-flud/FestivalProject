@@ -12,13 +12,19 @@ public class Main {
 
 
         while (running) {
-            out.print("[C]reate festival, [V]iew festival, [E]dit festival, create [B]and, or [Q]uit: ");
+            out.print("[C]reate festival, [V]iew festival, [S]et festival lineup, create [B]and, or [Q]uit: ");
             String option = sc.next().toLowerCase();
             switch (option) {
                 case "c":
                     Festival newFestival = new Festival();
                     newFestival.setFestivalInfo();
-                    festivalMap.put(newFestival.festName, newFestival);
+                    if (newFestival.correctlyCreated.equals(true)) {
+                        festivalMap.put(newFestival.festName, newFestival);
+                        out.println(newFestival.festName + " festival created!");
+                    } else {
+                        newFestival = null;
+                        out.println("Incorrectly created festival deleted!");
+                    }
                     break;
                 case "v":
 //                    currentState = "Viewing";
@@ -42,7 +48,7 @@ public class Main {
                                         currFest = festivalMap.get(chosenFest);
                                         out.println(currFest.festName);
                                         out.println(currFest.location);
-                                        out.println(currFest.numOfStages);
+//                                        out.println(currFest.numOfStages);
                                         out.println(currFest.audienceSize);
                                     } else {
                                         out.println("Invalid festival name!");
@@ -87,6 +93,36 @@ public class Main {
                     bandsMap.put(newBand.bandName, newBand);
                     break;
 
+                case "s":
+                    if (bandsMap.size() >= 10) {
+                        int printCounter = 0;
+                        String festivalPrint = "";
+                        for (String eachFestival : festivalMap.keySet()) {
+                            printCounter += 1;
+                            festivalPrint += eachFestival + ", ";
+                            if (printCounter == 3) {
+                                out.println(festivalPrint);
+                                festivalPrint = "";
+                                printCounter = 0;
+                            }
+                        }
+                        if (printCounter < 3 && !festivalPrint.equals("")) {
+                            out.println(festivalPrint);
+                        }
+                    }
+                    out.println("Which festival would you like to set the lineup for?");
+                    out.println("(Type the name of the festival as it appears.)");
+                    Festival currFest;
+                    String chosenFest = sc.next().toLowerCase();
+                    chosenFest += sc.nextLine().toLowerCase();
+                    for (String festName : festivalMap.keySet()) {
+                        if (festName.toLowerCase().equals(chosenFest)) {
+                            currFest = festivalMap.get(chosenFest);
+                            currFest.pickBandsForLineUp(bandsMap);
+                        }
+                    }
+                    break;
+
                 case "q":
                     running = false;
                     break;
@@ -95,69 +131,5 @@ public class Main {
                     break;
             }
         }
-//        while (currentState.equals("Viewing")) {
-//            out.print("View [F]estivals or [B]ands: ");
-//            String option = sc.next().toLowerCase();
-//            switch (option) {
-//                case "f":
-//                    for (String festName : festivalMap.keySet()) {
-//                        Festival eachFest = festivalMap.get(festName);
-//                        out.println(eachFest.festName);
-//                    }
-//
-//                    Festival currFest;
-//                    out.print("Please enter the name of the festival you would like to view: ");
-//                    String chosenFest = sc.next();
-//                    chosenFest += sc.nextLine();
-//                    for (String festName : festivalMap.keySet()) {
-//                        if (festName.equals(chosenFest)) {
-//                            currFest = festivalMap.get(chosenFest);
-//                            out.println(currFest.festName);
-//                            out.println(currFest.location);
-//                            out.println(currFest.numOfStages);
-//                            out.println(currFest.audienceSize);
-//                        } else {
-//                            out.println("Invalid festival name!");
-//                        }
-//                    }
-//                    break;
-//
-//                case "b":
-//                    for (String bandName : bandsMap.keySet()) {
-//                        Band eachBand = bandsMap.get(bandName);
-//                        out.println(eachBand.bandName);
-//                    }
-//
-//                    Band currBand;
-//                    out.print("Please enter the name of the band you would like to view: ");
-//                    String chosenBand = sc.next();
-//                    chosenBand += sc.nextLine();
-//                    for (String bandName : bandsMap.keySet()) {
-//                        if (chosenBand.equals(bandName)) {
-//                            currBand = bandsMap.get(chosenBand);
-//                            out.println(currBand.bandName);
-//                        } else {
-//                            out.println("Invalid band name!");
-//                        }
-//                    }
-//                    break;
-//
-//                case "m":
-//                    currentState = "Main-Menu";
-//                    break;
-//
-//                default:
-//                    out.println("Invalid input!");
-//                    break;
-//            }
-//
-//        }
-//        while (currentState.equals("Festival-Management")) {
-//
-//        }
-//
-//        while (currentState.equals("Band-Management")) {
-//
-//        }
     }
 }

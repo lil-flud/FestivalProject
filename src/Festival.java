@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import static java.lang.System.*;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -8,27 +9,58 @@ public class Festival {
     String festName;
     String location;
     int audienceSize;
-    byte numOfStages;
+//    byte numOfStages;
     ArrayList<Band> lineup;
+    Boolean correctlyCreated;
 
     public void setFestivalInfo() {
+        Scanner scanner = new Scanner(in);
         this.setName();
         this.setLocation();
-        this.setNumOfStages();
+//        this.setNumOfStages();
         this.setAudienceSize();
+        Boolean running = true;
+        while (running) {
+            String confirmation = String.format("--Festival Name: %s\n--Festival Location: %s\n--Expected Audience Size: %s\n--Is this correct? [Y]es or [N]o: ", this.festName, this.location, this.audienceSize);
+            out.print(confirmation);
+            String input = scanner.next().toLowerCase();
+            switch (input) {
+                case "y":
+                    this.correctlyCreated = true;
+                    running = false;
+                    break;
+
+                case "n":
+                    this.correctlyCreated = false;
+                    running = false;
+                    break;
+
+                default:
+                    out.println("Invalid option!");
+                    break;
+            }
+        }
+
+
     }
 
     public void setName() {
         Scanner scanner = new Scanner(in);
+        boolean confirmed;
         boolean running = true;
         while (running) {
             out.println("Festival name: ");
             String potentialName = scanner.next();
             potentialName += scanner.nextLine();
-            out.println("Is " + potentialName + " correct? [Y]es, [N]o: ");
+            out.println(potentialName);
             String confirmation = "";
-            boolean confirmed = false;
+            if (!potentialName.equals("")) {
+                confirmed = false;
+            } else {
+                confirmed = true;
+            }
             while (!confirmed) {
+                out.println("Is " + potentialName + " correct? [Y]es, [N]o: ");
                 confirmation = scanner.next().toLowerCase();
                 switch (confirmation) {
                     case "y":
@@ -80,20 +112,20 @@ public class Festival {
         }
     }
 //
-    public void setNumOfStages() {
-        boolean running = true;
-        boolean valid;
-        Scanner scan = new Scanner(in);
-        while (running) {
-            out.print("How many stages will there be at this festival? (1-5): ");
-            String numStages = scan.next();
-            valid = this.validateByte(numStages);
-            if (valid) {
-                this.numOfStages = Byte.valueOf(numStages);
-                running = false;
-            }
-        }
-    }
+//    public void setNumOfStages() {
+//        boolean running = true;
+//        boolean valid;
+//        Scanner scan = new Scanner(in);
+//        while (running) {
+//            out.print("How many stages will there be at this festival? (1-5): ");
+//            String numStages = scan.next();
+//            valid = this.validateByte(numStages);
+//            if (valid) {
+//                this.numOfStages = Byte.valueOf(numStages);
+//                running = false;
+//            }
+//        }
+//    }
     private boolean validateByte(String potentialByte) {
         Byte num;
         boolean valid;
@@ -146,8 +178,14 @@ public class Festival {
         return valid;
     }
 
-    public void pickBandsForLineUp(ArrayList<Band> allBands) {
-
+    public void pickBandsForLineUp(HashMap<String, Band> allBands) {
+        Boolean running = true;
+        byte numberOfBandsChosen = 0;
+        while (running) {
+            for (String eachBandName : allBands.keySet()) {
+                out.println();
+            }
+        }
     }
 
     public void setLineup(ArrayList<Band> lineup) {
