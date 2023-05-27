@@ -50,6 +50,7 @@ public class Main {
                                         out.println(currFest.location);
 //                                        out.println(currFest.numOfStages);
                                         out.println(currFest.audienceSize);
+                                        out.println(currFest.lineup);
                                     } else {
                                         out.println("Invalid festival name!");
                                     }
@@ -94,12 +95,16 @@ public class Main {
                     break;
 
                 case "s":
-                    if (bandsMap.size() >= 10) {
+                    if (bandsMap.size() >= 5) {
+                        int numberInLineCounter = 0;
                         int printCounter = 0;
                         String festivalPrint = "";
-                        for (String eachFestival : festivalMap.keySet()) {
+                        for (Festival eachFestival : festivalMap.values()) {
                             printCounter += 1;
-                            festivalPrint += eachFestival + ", ";
+                            numberInLineCounter += 1;
+                            if (eachFestival.lineup.size() == 0) {
+                                festivalPrint += numberInLineCounter + ".) " + eachFestival.festName + ", ";
+                            }
                             if (printCounter == 3) {
                                 out.println(festivalPrint);
                                 festivalPrint = "";
@@ -109,17 +114,20 @@ public class Main {
                         if (printCounter < 3 && !festivalPrint.equals("")) {
                             out.println(festivalPrint);
                         }
-                    }
-                    out.println("Which festival would you like to set the lineup for?");
-                    out.println("(Type the name of the festival as it appears.)");
-                    Festival currFest;
-                    String chosenFest = sc.next().toLowerCase();
-                    chosenFest += sc.nextLine().toLowerCase();
-                    for (String festName : festivalMap.keySet()) {
-                        if (festName.toLowerCase().equals(chosenFest)) {
-                            currFest = festivalMap.get(chosenFest);
-                            currFest.pickBandsForLineUp(bandsMap);
+
+                        out.println("Which festival would you like to set the lineup for?");
+                        out.println("(Type the name of the festival as it appears.)");
+                        Festival currFest;
+                        String chosenFest = sc.next();
+                        chosenFest += sc.nextLine();
+                        for (Festival eachFest : festivalMap.values()) {
+                            if (eachFest.festName.equalsIgnoreCase(chosenFest)) {
+                                currFest = eachFest;
+                                currFest.pickBandsForLineUp(bandsMap);
+                            }
                         }
+                    } else {
+                        out.println("There are not enough bands in the system to set a lineup yet!");
                     }
                     break;
 

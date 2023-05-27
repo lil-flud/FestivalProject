@@ -10,7 +10,7 @@ public class Festival {
     String location;
     int audienceSize;
 //    byte numOfStages;
-    ArrayList<Band> lineup;
+    ArrayList<String> lineup = new ArrayList<String>();
     Boolean correctlyCreated;
 
     public void setFestivalInfo() {
@@ -130,7 +130,7 @@ public class Festival {
         Byte num;
         boolean valid;
         try {
-            num = Byte.valueOf(potentialByte);
+            num = Byte.parseByte(potentialByte);
 //            valid = (num > 0 && num < 6) ? true: false;
             if (num > 0 && num < 6) {
                 valid = true;
@@ -164,7 +164,7 @@ public class Festival {
         int num;
         boolean valid;
         try {
-            num = Integer.valueOf(potentialInt);
+            num = Integer.parseInt(potentialInt);
             if (num > 0 && num < 100001) {
                 valid = true;
             } else {
@@ -178,17 +178,42 @@ public class Festival {
         return valid;
     }
 
-    public void pickBandsForLineUp(HashMap<String, Band> allBands) {
+    public void pickBandsForLineUp(HashMap<String, Band> allBandsMap) {
         Boolean running = true;
         byte numberOfBandsChosen = 0;
+        Scanner scanner = new Scanner(in);
         while (running) {
-            for (String eachBandName : allBands.keySet()) {
-                out.println();
+            Band addedBand;
+            int numberInLineCounter = 0;
+            int printCounter = 0;
+            String bandChoicesPrint = "";
+            for (Band eachBand : allBandsMap.values()) {
+                if (!this.lineup.contains(eachBand.bandName)) {
+                    printCounter += 1;
+                    numberInLineCounter++;
+                    bandChoicesPrint += numberInLineCounter + ".) " + eachBand.bandName + ", ";
+                }
+                if (printCounter == 3) {
+                    out.println(bandChoicesPrint);
+                    bandChoicesPrint = "";
+                    printCounter = 0;
+                }
+            }
+            if (printCounter < 3 && !bandChoicesPrint.equals("")) {
+                out.println(bandChoicesPrint);
+            }
+            out.print("Which band would you like to add to the lineup? (Press [Q] to quit): ");
+            String chosenBand = scanner.next();
+            chosenBand += scanner.nextLine();
+            if (chosenBand.toLowerCase().equals("q")) {
+                running = false;
+            } else {
+                for (Band eachBand : allBandsMap.values()) {
+                    if (eachBand.bandName.equalsIgnoreCase(chosenBand)) {
+                        this.lineup.add(eachBand.bandName);
+                    }
+                }
             }
         }
-    }
-
-    public void setLineup(ArrayList<Band> lineup) {
-        this.lineup = lineup;
     }
 }
