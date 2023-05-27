@@ -40,7 +40,8 @@ public class Main {
                                 }
 
                                 Festival currFest;
-                                out.print("Please enter the name of the festival you would like to view: ");
+                                out.println("Please enter the name of the festival you would like to view: ");
+                                out.println("(Please type festival name exactly as you see it.)");
                                 String chosenFest = sc.next();
                                 chosenFest += sc.nextLine();
                                 for (String festName : festivalMap.keySet()) {
