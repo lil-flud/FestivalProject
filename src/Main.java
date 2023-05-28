@@ -30,7 +30,7 @@ public class Main {
 //                    currentState = "Viewing";
                     boolean viewing = true;
                     while (viewing) {
-                        out.print("View [F]estivals or [B]ands: ");
+                        out.print("View [F]estivals, [B]ands, [M]ain Menu: ");
                         option = sc.next().toLowerCase();
                         switch (option) {
                             case "f":
