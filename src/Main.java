@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 import static java.lang.System.*;
 
@@ -7,8 +9,9 @@ public class Main {
         Scanner sc = new Scanner(in);
         String currentState = "Main-Menu";
         boolean running = true;
-        HashMap<String, Festival> festivalMap = new HashMap<>();
-        HashMap<String, Band> bandsMap = new HashMap<>();
+        LinkedHashMap<String, Festival> festivalMap = new LinkedHashMap<>();
+        LinkedHashMap<String, Band> bandsMap = new LinkedHashMap<>();
+        ArrayList<Gig> allGigs = new ArrayList<Gig>();
 
 
         while (running) {
@@ -51,7 +54,7 @@ public class Main {
                                         out.println(currFest.location);
 //                                        out.println(currFest.numOfStages);
                                         out.println(currFest.audienceSize);
-                                        out.println(currFest.lineup);
+                                        currFest.displayLineUp();
                                     } else {
                                         out.println("Invalid festival name!");
                                     }
@@ -78,6 +81,11 @@ public class Main {
                                 }
                                 break;
 
+                            case "g":
+                                for (Gig eachGig : allGigs) {
+                                    out.println(eachGig.band.bandName + " is playing at " + eachGig.festival.festName + "!");
+                                }
+
                             case "m":
                                 viewing = false;
                                 break;
@@ -96,7 +104,7 @@ public class Main {
                     break;
 
                 case "s":
-                    if (bandsMap.size() >= 5) {
+                    if (bandsMap.size() >= 3) {
                         int numberInLineCounter = 0;
                         int printCounter = 0;
                         String festivalPrint = "";
@@ -124,7 +132,7 @@ public class Main {
                         for (Festival eachFest : festivalMap.values()) {
                             if (eachFest.festName.equalsIgnoreCase(chosenFest)) {
                                 currFest = eachFest;
-                                currFest.pickBandsForLineUp(bandsMap);
+                                currFest.pickBandsForLineUp(bandsMap, allGigs);
                             }
                         }
                     } else {

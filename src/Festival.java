@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import static java.lang.System.*;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -178,7 +179,7 @@ public class Festival {
         return valid;
     }
 
-    public void pickBandsForLineUp(HashMap<String, Band> allBandsMap) {
+    public void pickBandsForLineUp(HashMap<String, Band> allBandsMap, ArrayList<Gig> gigsList) {
         Boolean running = true;
         byte numberOfBandsChosen = 0;
         Scanner scanner = new Scanner(in);
@@ -210,10 +211,17 @@ public class Festival {
             } else {
                 for (Band eachBand : allBandsMap.values()) {
                     if (eachBand.bandName.equalsIgnoreCase(chosenBand)) {
-                        this.lineup.add(eachBand.bandName);
+                        Gig newGig = new Gig(eachBand, this);
+                        gigsList.add(newGig);
+                        this.lineup.add(newGig.band.bandName);
                     }
                 }
             }
+        }
+    }
+    public void displayLineUp() {
+        for (String eachBandName : this.lineup) {
+            out.println(eachBandName);
         }
     }
 }
